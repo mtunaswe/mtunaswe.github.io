@@ -12,7 +12,7 @@ A personal portfolio website built with Next.js, TypeScript, and Tailwind CSS.
 ## Tech Stack
 
 <p>
-	<img src="https://skillicons.dev/icons?i=nextjs,react,ts,tailwind,nodejs,npm,github,githubactions,vscode" alt="Core stack icons" />
+	<img src="https://skillicons.dev/icons?i=nextjs,react,ts,tailwind,nodejs,npm,vscode" alt="Core stack icons" />
 </p>
 
 <p>
