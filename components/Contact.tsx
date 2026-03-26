@@ -8,7 +8,7 @@ import { IoMailOutline } from "react-icons/io5";
 import { SiGmail } from "react-icons/si";
 import ContactCard from "./ContactCard";
 
-const FORM_ENDPOINT = "https://formsubmit.co/ajax/mtuna21@ku.edu.tr";
+const FORM_ENDPOINT = "https://formsubmit.co/ajax/f81c49ad84eaa71f49082dee9038de35";
 
 type ContactFormValues = {
   senderName: string;
@@ -55,19 +55,18 @@ export default function Contact() {
     setErrorMessage("");
 
     try {
+      const payload = new FormData();
+      payload.append("name", formValues.senderName);
+      payload.append("email", formValues.senderEmail);
+      payload.append("_replyto", formValues.senderEmail);
+      payload.append("_subject", `Portfolio Contact: ${formValues.reasonToContact}`);
+      payload.append("message", formValues.senderMessage);
+      payload.append("_captcha", "false");
+      payload.append("_template", "table");
+
       const response = await fetch(FORM_ENDPOINT, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          name: formValues.senderName,
-          email: formValues.senderEmail,
-          subject: `Portfolio Contact: ${formValues.reasonToContact}`,
-          message: formValues.senderMessage,
-          _captcha: "false",
-        }),
+        body: payload,
       });
 
       if (!response.ok) {
@@ -82,7 +81,11 @@ export default function Contact() {
         senderMessage: "",
       });
     } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : "Something went wrong while sending.");
+      setErrorMessage(
+        error instanceof Error
+          ? `${error.message} If this keeps happening, use the Direct Mail link below.`
+          : "Something went wrong while sending. Please use the Direct Mail link below."
+      );
     } finally {
       setIsSending(false);
     }
