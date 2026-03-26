@@ -1,8 +1,9 @@
 import type { NextConfig } from "next";
 
 const isGitHubActions = process.env.GITHUB_ACTIONS === "true";
+const repositoryOwner = process.env.GITHUB_REPOSITORY_OWNER ?? "";
 const repositoryName = process.env.GITHUB_REPOSITORY?.split("/")[1] ?? "";
-const isUserSiteRepo = repositoryName.endsWith(".github.io");
+const isUserSiteRepo = repositoryName === `${repositoryOwner}.github.io`;
 
 const nextConfig: NextConfig = {
   output: "export",

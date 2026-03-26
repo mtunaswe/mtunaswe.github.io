@@ -2,6 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useMemo, useRef } from 'react';
+import Image from 'next/image';
 import { FaGithub } from 'react-icons/fa6';
 import type { WorkItem } from './workData';
 
@@ -58,13 +59,21 @@ export default function WorkCard({ item, index }: WorkCardProps) {
 
       <div className="relative z-10 flex flex-1 flex-col">
         <motion.div
-          className="mb-4 h-48 w-full overflow-hidden rounded-xl border border-dashed border-brand-primary/40 bg-slate-900/60"
+          className="mb-4 h-48 w-full overflow-hidden rounded-xl border border-brand-primary/35 bg-slate-900/60"
           initial={{ opacity: 0, y: 10 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
           transition={{ duration: 0.45, delay: index * 0.1 + 0.15 }}
         >
-          <div className="flex h-full w-full items-center justify-center bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.16),transparent_45%),radial-gradient(circle_at_80%_70%,rgba(129,140,248,0.14),transparent_50%)] px-4 text-center">
-            <span className="font-body text-xs uppercase tracking-[0.12em] text-slate-300/85">Project Image Placeholder</span>
+          <div className="relative h-full w-full">
+            <Image
+              src={item.imageUrl}
+              alt={`${item.title} preview image`}
+              fill
+              sizes="(max-width: 640px) 78vw, 390px"
+              className="object-cover"
+              priority={index < 2}
+            />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/45 via-transparent to-transparent" />
           </div>
         </motion.div>
 

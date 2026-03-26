@@ -56,12 +56,11 @@ export default function AboutMeSection() {
           </p>
 
           <p className="mt-4 font-body text-sm leading-relaxed text-slate-300">
-            A daydreamer who loves discussing startup ideas anytime with friends, a perfectionist
-            who does best of any work to contribute meaningful real-world work.
+            A daydreamer who loves discussing startup ideas anytime with friends.
           </p>
 
           <p className="mt-4 font-body text-sm leading-relaxed text-slate-300">
-            Outside of work, I love games, game development, guitar, and coding.
+            Outside of work, I love video games, game development, guitar, vibe coding, fitness.
           </p>
         </div>
       </div>

@@ -8,13 +8,13 @@ export interface ExperienceItem {
 
 export const experienceData: ExperienceItem[] = [
   {
-    role: 'Team Member & Avionics Consultant',
+    role: 'Team Member & Avionics Advisor',
     year: 'Aug 2024 - Present',
     company: 'Koc University Association of Space and Rocketry (KUASAR) - Istanbul, Sariyer',
     description: [
       'Contributed to two custom PCBs for the rocket flight computer for Teknofest and IREC.',
       'Supported development of the ground station UI for real-time telemetry and mission visualization.',
-      'Continuing in KUASAR through avionics consulting support for system design and integration decisions.',
+      'Continuing in KUASAR through avionics advisory support.',
     ],
     technologies: ['PCB Design', 'Altium Designer', 'Telemetry UI', 'Avionics'],
   },
@@ -26,7 +26,7 @@ export const experienceData: ExperienceItem[] = [
       'Researched laser distance sensing technologies and tested OPT3101 evaluation hardware.',
       'Reverse engineered OPT3101 module behavior and designed a constrained custom PCB in Altium.',
     ],
-    technologies: ['OPT3101', 'Altium Designer', 'Hardware Research', 'PCB Prototyping'],
+    technologies: ['Altium Designer', 'Hardware Research', 'PCB Prototyping', 'SPICE'],
   },
   {
     role: 'Teknofest Efficiency Challenge Team Member',
@@ -57,6 +57,6 @@ export const experienceData: ExperienceItem[] = [
       'Joined KUDANS as a dancer for swing dance performances while maintaining academic excellence.',
       'Rowing, Sailing, Music.'
     ],
-    technologies: ['Mentorship', 'Tutoring', 'Academic Support', 'Swing Dance'],
+    technologies: ['Mentorship', 'Tutoring', 'Academic Support', 'Swing Dance', 'Rowing', 'Sailing', 'Music'],
   },
 ];

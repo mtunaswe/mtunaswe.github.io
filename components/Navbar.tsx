@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import Lenis from "lenis";
 import HoverLinks from "./HoverLinks";
 
 const links = [
@@ -10,35 +9,14 @@ const links = [
   { label: "EXPERIENCE", target: "#experience" },
   { label: "SKILLS", target: "#skills" },
   { label: "WORK", target: "#work" },
+  { label: "let's connect!", target: "#connect" },
 ];
 
 export default function Navbar() {
   const [activeTarget, setActiveTarget] = useState<string>("");
 
   useEffect(() => {
-    let rafId = 0;
-    let lenis: Lenis | null = null;
     let updateActiveSection = () => {};
-
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      lenis = new Lenis({
-        duration: 1.45,
-        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        orientation: "vertical",
-        gestureOrientation: "vertical",
-        smoothWheel: true,
-        wheelMultiplier: 1.15,
-        touchMultiplier: 1.35,
-        infinite: false,
-      });
-
-      const raf = (time: number) => {
-        lenis?.raf(time);
-        updateActiveSection();
-        rafId = requestAnimationFrame(raf);
-      };
-      rafId = requestAnimationFrame(raf);
-    }
 
     const anchors = document.querySelectorAll<HTMLAnchorElement>(".header a[data-href]");
 
@@ -52,11 +30,8 @@ export default function Navbar() {
       const target = document.querySelector(section) as HTMLElement | null;
       if (!target) return;
 
-      if (lenis) {
-        lenis.scrollTo(target, { offset: 0, duration: 1.35 });
-      } else {
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      target.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" });
     };
 
     const sections = links
@@ -82,7 +57,6 @@ export default function Navbar() {
 
     anchors.forEach((anchor) => anchor.addEventListener("click", onClick));
     const onResize = () => {
-      lenis?.resize();
       updateActiveSection();
     };
     window.addEventListener("resize", onResize);
@@ -91,8 +65,6 @@ export default function Navbar() {
     updateActiveSection();
 
     return () => {
-      cancelAnimationFrame(rafId);
-      lenis?.destroy();
       anchors.forEach((anchor) => anchor.removeEventListener("click", onClick));
       window.removeEventListener("resize", onResize);
       window.removeEventListener("scroll", updateActiveSection);
@@ -105,10 +77,6 @@ export default function Navbar() {
         <div className="header">
           <a href="#home-top" className="navbar-title navbar-icon-link" data-cursor="disable" data-href="#home-top" aria-label="Home">
             <Image src="/myicon.ico" alt="Mert Tuna" width={28} height={28} className="navbar-icon" />
-          </a>
-
-          <a href="#home-top" className="navbar-connect" data-cursor="disable" data-href="#home-top">
-            let&apos;s connect
           </a>
 
           <ul>

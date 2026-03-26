@@ -9,6 +9,7 @@ type MarqueeRowProps = {
   direction: 'left' | 'right';
   speed: number;
   items: typeof skillsData[number]['data'];
+  isActive: boolean;
 };
 
 function getRowSpeed(skillCount: number) {
@@ -16,7 +17,7 @@ function getRowSpeed(skillCount: number) {
   return 48 + skillCount * 5;
 }
 
-function MarqueeRow({ direction, speed, items }: MarqueeRowProps) {
+function MarqueeRow({ direction, speed, items, isActive }: MarqueeRowProps) {
   const viewportRef = useRef<HTMLDivElement | null>(null);
   const measureRef = useRef<HTMLDivElement | null>(null);
   const [singleRowWidth, setSingleRowWidth] = useState(0);
@@ -64,9 +65,9 @@ function MarqueeRow({ direction, speed, items }: MarqueeRowProps) {
 
       <motion.div
         className="flex w-max gap-6 whitespace-nowrap"
-        animate={singleRowWidth > 0 ? { x: animateX } : undefined}
+        animate={singleRowWidth > 0 && isActive ? { x: animateX } : undefined}
         transition={
-          animationDuration > 0
+          animationDuration > 0 && isActive
             ? { duration: animationDuration, ease: 'linear', repeat: Infinity }
             : undefined
         }
@@ -84,8 +85,8 @@ function MarqueeRow({ direction, speed, items }: MarqueeRowProps) {
 export default function Skills() {
   const ref = useRef<HTMLElement | null>(null);
   const isInView = useInView(ref, {
-    once: true,
-    margin: '-80px',
+    once: false,
+    margin: '-10% 0px -10% 0px',
     amount: 0.1,
   });
 
@@ -107,16 +108,8 @@ export default function Skills() {
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          My Skills
+          Skills
         </motion.h2>
-        <motion.p
-          className="mx-auto mt-4 max-w-3xl font-body text-sm text-slate-300"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.35 }}
-        >
-          Tech stack and tools I use to build fast, polished, and maintainable products.
-        </motion.p>
       </motion.div>
 
       <motion.div
@@ -131,6 +124,7 @@ export default function Skills() {
             items={category.data}
             direction={index % 2 === 0 ? 'left' : 'right'}
             speed={getRowSpeed(category.data.length)}
+            isActive={isInView}
           />
         ))}
       </motion.div>
