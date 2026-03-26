@@ -19,7 +19,7 @@ const jetBrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "Mert Tuna",
-  description: "Interactive portfolio with React Three Fiber hero",
+  description: "My Portfolio Website",
 };
 
 export default function RootLayout({
