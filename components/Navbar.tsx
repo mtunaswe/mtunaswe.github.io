@@ -14,6 +14,7 @@ const links = [
 
 export default function Navbar() {
   const [activeTarget, setActiveTarget] = useState<string>("");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     let updateActiveSection = () => {};
@@ -26,6 +27,7 @@ export default function Navbar() {
       const section = anchor.getAttribute("data-href");
       if (!section) return;
       setActiveTarget(section);
+      setIsMenuOpen(false);
 
       const target = document.querySelector(section) as HTMLElement | null;
       if (!target) return;
@@ -57,6 +59,9 @@ export default function Navbar() {
 
     anchors.forEach((anchor) => anchor.addEventListener("click", onClick));
     const onResize = () => {
+      if (window.innerWidth >= 500) {
+        setIsMenuOpen(false);
+      }
       updateActiveSection();
     };
     window.addEventListener("resize", onResize);
@@ -79,12 +84,42 @@ export default function Navbar() {
             <Image src="/myicon.ico" alt="Mert Tuna" width={28} height={28} className="navbar-icon" />
           </a>
 
-          <ul>
+          {isMenuOpen ? (
+            <button
+              type="button"
+              className="navbar-toggle"
+              aria-label="Close navigation menu"
+              aria-controls="primary-navigation"
+              aria-expanded="true"
+              title="Close navigation menu"
+              data-cursor="disable"
+              onClick={() => setIsMenuOpen((previousState) => !previousState)}
+            >
+              CLOSE
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="navbar-toggle"
+              aria-label="Open navigation menu"
+              aria-controls="primary-navigation"
+              aria-expanded="false"
+              title="Open navigation menu"
+              data-cursor="disable"
+              onClick={() => setIsMenuOpen((previousState) => !previousState)}
+            >
+              MENU
+            </button>
+          )}
+
+          <ul id="primary-navigation" className={isMenuOpen ? "is-open" : ""}>
             {links.map((link) => (
               <li key={link.target}>
                 <a
                   data-href={link.target}
                   href={link.target}
+                  aria-label={link.label}
+                  title={link.label}
                   className={activeTarget === link.target ? "nav-link-active" : ""}
                 >
                   <HoverLinks text={link.label} />

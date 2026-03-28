@@ -8,7 +8,7 @@ export interface ExperienceItem {
 
 export const experienceData: ExperienceItem[] = [
   {
-    role: 'Team Member & Avionics Advisor',
+    role: 'Avionics Team Member & Advisor',
     year: 'Aug 2024 - Present',
     company: 'Koc University Association of Space and Rocketry (KUASAR) - Istanbul, Sariyer',
     description: [
@@ -29,7 +29,7 @@ export const experienceData: ExperienceItem[] = [
     technologies: ['Altium Designer', 'Hardware Research', 'PCB Prototyping', 'SPICE'],
   },
   {
-    role: 'Teknofest Efficiency Challenge Team Member',
+    role: 'Team Member',
     year: 'Dec 2023 - July 2024',
     company: 'Koc University Renewable Energy Community (KUREC) - Istanbul, Sariyer',
     description: [

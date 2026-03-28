@@ -77,24 +77,25 @@ function PenguinModel() {
     }
 
     const aspect = size.width / Math.max(size.height, 1);
-    const isShortViewport = size.height < 760;
+    const isMobile = size.width < 768;
+    const isShortViewport = size.height < 760 && !isMobile;
 
     let targetScale = 5.15;
     let targetX = 2.22;
     let targetY = -0.38;
 
     if (size.width < 480) {
-      targetScale = 2.9;
-      targetX = 0.46;
-      targetY = -0.68;
+      targetScale = 3.45;
+      targetX = 0.18;
+      targetY = -0.36;
     } else if (size.width < 640) {
-      targetScale = 3.3;
-      targetX = 0.55;
-      targetY = -0.66;
+      targetScale = 3.72;
+      targetX = 0.24;
+      targetY = -0.34;
     } else if (size.width < 768) {
-      targetScale = 3.5;
-      targetX = 0.64;
-      targetY = -0.64;
+      targetScale = 3.95;
+      targetX = 0.3;
+      targetY = -0.3;
     } else if (size.width < 900) {
       targetScale = 4.05;
       targetX = 1.05;
@@ -113,12 +114,14 @@ function PenguinModel() {
       targetY = -0.38;
     }
 
-    if (aspect < 1.55) {
-      targetScale -= 0.3;
-      targetX += 0.2;
-    } else if (aspect > 2.15) {
-      targetScale += 0.1;
-      targetX -= 0.05;
+    if (!isMobile) {
+      if (aspect < 1.55) {
+        targetScale -= 0.3;
+        targetX += 0.2;
+      } else if (aspect > 2.15) {
+        targetScale += 0.1;
+        targetX -= 0.05;
+      }
     }
 
     if (isShortViewport) {
@@ -126,9 +129,13 @@ function PenguinModel() {
       targetY -= 0.04;
     }
 
-    const horizontalNudge = size.width < 768 ? 0.08 : 0.16;
-    targetX += horizontalNudge;
-    targetScale *= 1.04;
+    if (isMobile) {
+      targetScale *= 1.08;
+      targetY -= 0.12;
+    } else {
+      targetX += 0.16;
+      targetScale *= 1.03;
+    }
 
     anchor.scale.setScalar(targetScale);
     anchor.position.set(targetX, targetY, 0);
@@ -166,7 +173,7 @@ useGLTF.preload('/assets/models/Penguins.glb');
 export default function HeroSection() {
   return (
     <section id="home-top" className="relative min-h-screen overflow-hidden bg-background">
-      <div className="hero-canvas-enter pointer-events-none absolute inset-0 z-0">
+      <div className="hero-canvas-enter pointer-events-none absolute inset-x-0 bottom-0 top-[34vh] z-0 md:inset-0">
         <Canvas
           camera={{ fov: 40, position: [0, 0.35, 11.6] }}
           dpr={[1, 2]}
@@ -183,8 +190,10 @@ export default function HeroSection() {
         </Canvas>
       </div>
 
-      <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-7xl items-center px-6 py-16 sm:px-10 lg:px-14">
-        <div className="max-w-2xl space-y-5 md:max-w-[56%] hero-enter">
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-[#0F172A] via-[#0F172A]/92 to-transparent md:hidden" />
+
+      <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-7xl items-start px-6 pb-16 pt-24 sm:px-10 md:items-center md:py-16 lg:px-14">
+        <div className="max-w-2xl space-y-5 pb-10 sm:pb-12 md:max-w-[56%] md:pb-0 hero-enter">
           <p className="hero-enter-item text-xs uppercase tracking-[0.2em] text-slate-300">Student Developer · Engineer · Builder </p>
           <h1 className="hero-enter-item font-heading text-5xl font-extrabold leading-[0.98] text-slate-50 sm:text-6xl md:text-7xl lg:text-8xl">
             Mert <span className="text-brand-primary">Tuna</span>
@@ -194,7 +203,7 @@ export default function HeroSection() {
           </p>
 
           <div id="socials" className="hero-enter-item pt-2">
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               {socialLinks.map(({ label, href, Icon }) => (
                 <a
                   key={label}

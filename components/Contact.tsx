@@ -146,7 +146,15 @@ export default function Contact() {
               className="w-full rounded-xl border border-brand-primary/25 bg-slate-900/70 px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-brand-primary/60"
             />
 
+            <label htmlFor="reasonToContact" className="sr-only">
+              Reason to Contact
+            </label>
+
             <select
+              id="reasonToContact"
+              name="reasonToContact"
+              title="Reason to Contact"
+              aria-label="Reason to Contact"
               value={formValues.reasonToContact}
               onChange={(event) => handleFieldChange("reasonToContact", event.target.value)}
               className="w-full rounded-xl border border-brand-primary/25 bg-slate-900/70 px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-brand-primary/60"
