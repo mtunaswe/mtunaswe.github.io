@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useInView } from 'framer-motion';
-import { useMemo, useRef } from 'react';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import { FaGithub } from 'react-icons/fa6';
 import type { WorkItem } from './workData';
@@ -13,8 +13,28 @@ type WorkCardProps = {
 
 export default function WorkCard({ item, index }: WorkCardProps) {
   const ref = useRef<HTMLElement | null>(null);
+  const shouldReduceMotion = useReducedMotion();
+  const [canHover, setCanHover] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const updateCanHover = () => setCanHover(mediaQuery.matches);
+
+    updateCanHover();
+
+    if (typeof mediaQuery.addEventListener === 'function') {
+      mediaQuery.addEventListener('change', updateCanHover);
+      return () => mediaQuery.removeEventListener('change', updateCanHover);
+    }
+
+    mediaQuery.addListener(updateCanHover);
+    return () => mediaQuery.removeListener(updateCanHover);
+  }, []);
+
+  const enableHoverEffects = canHover && !shouldReduceMotion;
+
   const isInView = useInView(ref, {
-    once: false,
+    once: true,
     margin: '-50px',
     amount: 0.2,
   });
@@ -28,34 +48,42 @@ export default function WorkCard({ item, index }: WorkCardProps) {
       initial={{ opacity: 0, y: 40, scale: 0.95 }}
       animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 40, scale: 0.95 }}
       transition={{ duration: 0.6, delay: index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-      whileHover={{
-        y: -10,
-        scale: 1.02,
-        transition: {
-          duration: 0.3,
-          type: 'spring',
-          stiffness: 400,
-          damping: 25,
-        },
-      }}
+      whileHover={
+        enableHoverEffects
+          ? {
+              y: -10,
+              scale: 1.02,
+              transition: {
+                duration: 0.3,
+                type: 'spring',
+                stiffness: 400,
+                damping: 25,
+              },
+            }
+          : undefined
+      }
       className="group relative flex h-[68vh] max-h-[660px] w-[min(78vw,390px)] min-w-[330px] flex-col overflow-hidden rounded-2xl border border-brand-primary/25 bg-slate-950/40 p-4 shadow-soft-deeper backdrop-blur-xl"
     >
-      <motion.div
-        className="absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-30"
-        style={{ background: 'var(--shimmer)' }}
-        initial={{ x: '-100%' }}
-        whileHover={{ x: '200%' }}
-        transition={{ duration: 1, ease: 'easeInOut' }}
-      />
+      {enableHoverEffects && (
+        <motion.div
+          className="absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-30"
+          style={{ background: 'var(--shimmer)' }}
+          initial={{ x: '-100%' }}
+          whileHover={{ x: '200%' }}
+          transition={{ duration: 1, ease: 'easeInOut' }}
+        />
+      )}
 
-      <motion.div
-        className="pointer-events-none absolute inset-0 rounded-lg opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-        style={{
-          background:
-            'linear-gradient(45deg, rgba(59, 130, 246, 0.2), rgba(129, 140, 248, 0.2), rgba(59, 130, 246, 0.16))',
-          filter: 'blur(1px)',
-        }}
-      />
+      {enableHoverEffects && (
+        <motion.div
+          className="pointer-events-none absolute inset-0 rounded-lg opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          style={{
+            background:
+              'linear-gradient(45deg, rgba(59, 130, 246, 0.2), rgba(129, 140, 248, 0.2), rgba(59, 130, 246, 0.16))',
+            filter: 'blur(1px)',
+          }}
+        />
+      )}
 
       <div className="relative z-10 flex flex-1 flex-col">
         <motion.div
@@ -112,7 +140,7 @@ export default function WorkCard({ item, index }: WorkCardProps) {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
               transition={{ duration: 0.3, delay: index * 0.1 + 0.5 + techIndex * 0.05, type: 'spring', stiffness: 300 }}
-              whileHover={{ scale: 1.05 }}
+              whileHover={enableHoverEffects ? { scale: 1.05 } : undefined}
             >
               {techItem}
             </motion.span>
@@ -130,7 +158,7 @@ export default function WorkCard({ item, index }: WorkCardProps) {
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex w-auto items-center justify-center gap-2 rounded-full border border-brand-primary/45 bg-brand-primary/10 px-3 py-1.5 font-body text-xs text-slate-100 transition hover:bg-brand-primary/20"
-            whileHover={{ scale: 1.02 }}
+            whileHover={enableHoverEffects ? { scale: 1.02 } : undefined}
             whileTap={{ scale: 0.98 }}
           >
             {isGithub && <FaGithub className="h-4 w-4" />}

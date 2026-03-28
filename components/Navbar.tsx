@@ -8,7 +8,7 @@ const links = [
   { label: "ABOUT", target: "#about" },
   { label: "EXPERIENCE", target: "#experience" },
   { label: "SKILLS", target: "#skills" },
-  { label: "WORK", target: "#work" },
+  { label: "PROJECTS", target: "#work" },
   { label: "let's connect!", target: "#connect" },
 ];
 

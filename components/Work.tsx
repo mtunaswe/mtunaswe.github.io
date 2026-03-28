@@ -141,7 +141,7 @@ export default function Work() {
     >
       <div ref={viewportRef} className="sticky top-0 h-screen overflow-hidden border-y border-slate-800/60 bg-background">
         <div className="pointer-events-none absolute inset-x-0 top-0 z-20 bg-gradient-to-b from-background via-background/90 to-transparent px-6 pb-6 pt-8 text-center sm:px-10 lg:px-14">
-          <h2 className="font-heading text-5xl font-bold text-brand-primary sm:text-6xl">My Work</h2>
+          <h2 className="font-heading text-5xl font-bold text-brand-primary sm:text-6xl">Projects</h2>
           {hasMoreProjects && (
             <p className="mt-3 font-body text-sm tracking-[0.06em] text-slate-300/90">
               Scroll down to explore more projects

@@ -20,7 +20,7 @@ type ContactFormValues = {
 const socials = [
   { label: "GitHub", href: "https://github.com/mtunaswe", Icon: FaGithub },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/mtuna/", Icon: FaLinkedin },
-  { label: "Gmail", href: "mailto:mtuna21@ku.edu.tr", Icon: SiGmail },
+  { label: "Mail", href: "mailto:mtuna21@ku.edu.tr", Icon: SiGmail },
   {
     label: "Instagram",
     href: "https://www.instagram.com/merttna_?igsh=MWN3MzdheW4yNms1cQ%3D%3D&utm_source=qr",
@@ -218,7 +218,6 @@ export default function Contact() {
               icon={IoMailOutline}
               label="Direct Mail"
               value="mtuna21@ku.edu.tr"
-              href="mailto:mtuna21@ku.edu.tr"
               delay={0.2}
             />
           </div>
