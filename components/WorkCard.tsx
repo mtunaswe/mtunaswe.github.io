@@ -59,7 +59,7 @@ export default function WorkCard({ item, index }: WorkCardProps) {
 
       <div className="relative z-10 flex flex-1 flex-col">
         <motion.div
-          className="mb-4 h-48 w-full overflow-hidden rounded-xl border border-brand-primary/35 bg-slate-900/60"
+          className="mb-4 h-44 w-full overflow-hidden rounded-xl border border-brand-primary/35 bg-slate-900/60 sm:h-48"
           initial={{ opacity: 0, y: 10 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
           transition={{ duration: 0.45, delay: index * 0.1 + 0.15 }}
@@ -91,7 +91,7 @@ export default function WorkCard({ item, index }: WorkCardProps) {
         </motion.h3>
 
         <motion.p
-          className="mt-4 flex-grow font-body text-sm leading-relaxed text-slate-200"
+          className="mt-3 flex-grow overflow-hidden font-body text-sm leading-relaxed text-slate-200 [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:4] lg:[-webkit-line-clamp:5]"
           initial={{ opacity: 0, y: 10 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
           transition={{ duration: 0.5, delay: index * 0.1 + 0.3 }}
@@ -100,7 +100,7 @@ export default function WorkCard({ item, index }: WorkCardProps) {
         </motion.p>
 
         <motion.div
-          className="mb-6 mt-5 flex flex-wrap gap-2"
+          className="mb-4 mt-4 flex max-h-[4.25rem] flex-wrap gap-2 overflow-hidden"
           initial={{ opacity: 0, y: 10 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
           transition={{ duration: 0.5, delay: index * 0.1 + 0.4 }}
@@ -120,7 +120,7 @@ export default function WorkCard({ item, index }: WorkCardProps) {
         </motion.div>
 
         <motion.div
-          className="mt-auto self-start"
+          className="mt-auto pb-1 self-start"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5, delay: index * 0.1 + 0.6 }}
